@@ -3,7 +3,7 @@ import fs from 'fs';
 import { fileURLToPath } from 'url';
 import { execSync } from 'child_process';
 
-const specificDate = parseInt(process.argv[2]);
+const specificDate = process.argv[2];
 const now = new Date();
 
 if (!specificDate && (now.getMonth() !== 11 || now.getDate() > 24)) {
@@ -11,12 +11,12 @@ if (!specificDate && (now.getMonth() !== 11 || now.getDate() > 24)) {
   process.exit(1);
 }
 
-if (!isNaN(specificDate) && (specificDate < 1 || specificDate > 24)) {
+if (specificDate && !isNaN(specificDate) && (specificDate < 1 || specificDate > 24)) {
   console.log('Please provide a date within the Advent season (npm start <1-24>)');
   process.exit(1);
 }
 
-if (isNaN(specificDate)) {
+if (specificDate && isNaN(specificDate)) {
   console.log('Please provide a date within the Advent season (npm start <1-24>)');
   process.exit(1);
 }
