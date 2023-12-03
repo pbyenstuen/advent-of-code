@@ -14,45 +14,46 @@ const spelledNumsMap = {
   nine: 9,
 };
 
+// Is not actually replacing, but inserting the corresponding number at index 1 in the spelled number
 const replaceSpelledNums = (str) => {
-  let result = str;
-
   for (const [spelling, num] of Object.entries(spelledNumsMap)) {
-    let index = result.indexOf(spelling);
+    let index = str.indexOf(spelling);
 
     while (index !== -1) {
-      result = [result.slice(0, index + 1), num, result.slice(index + 1)].join('');
-      index = result.indexOf(spelling, index);
+      str = [str.slice(0, index + 1), num, str.slice(index + 1)].join('');
+      index = str.indexOf(spelling, index);
     }
   }
 
-  return result;
+  return str;
 }
 
-const getSum = (numsArr) => numsArr.reduce((sum, cur) => sum + cur);
+const getNumsInString = (str) => str
+  .split('')
+  .map(char => parseInt(char))
+  .filter(num => !isNaN(num));
 
-const solve = (stringsArr) => {
-  const numsArr = stringsArr.map(str => {
-    const replacedStr = replaceSpelledNums(str);
-    const nums = [];
+const getFirstAndLastNumInString = (str) => {
+  const nums = getNumsInString(str);
 
-    for (const char of replacedStr) {
-      const parsedChar = parseInt(char);
+  const firstNum = nums.at(0);
+  const lastNum = nums.at(-1);
 
-      if (!isNaN(parsedChar)) {
-        nums.push(parsedChar);
-      }
-    }
-
-    const firstNum = nums.at(0);
-    const lastNum = nums.at(-1);
-
-    return parseInt([firstNum, lastNum].join(''));
-  });
-
-  return getSum(numsArr);
+  return parseInt([firstNum, lastNum].join(''));
 }
 
-const answer = solve(stringsArr);
+const solve = (stringsArr, replaceSpelled = false) => {
+  const numsArr = stringsArr.map(str =>
+    getFirstAndLastNumInString(
+      replaceSpelled ? replaceSpelledNums(str) : str)
+  );
 
-console.log(answer);
+  return numsArr.reduce((sum, cur) => sum + cur, 0);
+};
+
+const answers = {
+  1: solve(stringsArr),
+  2: solve(stringsArr, true),
+}
+
+console.log(answers);
