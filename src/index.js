@@ -31,10 +31,12 @@ const date = specificDate
 const folderName = `december-${date}`;
 const folderPath = path.join(currentDir, folderName);
 const indexPath = path.join(folderPath, 'index.js');
+const inputPath = path.join(folderPath, 'input.js');
 
 if (!fs.existsSync(folderPath)) {
   fs.mkdirSync(folderPath);
   fs.writeFileSync(indexPath, '');
+  fs.writeFileSync(inputPath, '');
 } else {
   console.log(`Running ${folderName}`)
   execSync(`node src/${folderName}`, { stdio: 'inherit' });
