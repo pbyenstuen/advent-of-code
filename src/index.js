@@ -28,7 +28,7 @@ const validateYear = (year) => {
 
   if (isNaN(parsedYear) || parsedYear > currentYear) {
     console.error(
-      `Invalid year. Please provide a year between ${minYear} and ${currentYear} (npm start <day> <year>).`
+      `Invalid year. Please provide a year before ${currentYear} (npm start <day> <year>).`
     );
     process.exit(1);
   }
