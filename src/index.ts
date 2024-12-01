@@ -1,6 +1,5 @@
 import path from "path";
 import fs from "fs";
-import { fileURLToPath } from "url";
 import { execSync } from "child_process";
 
 const [dayArg, yearArg] = process.argv.slice(2);
@@ -10,7 +9,7 @@ const currentDay = now.getUTCDate();
 const currentMonth = now.getUTCMonth();
 const currentYear = now.getUTCFullYear();
 
-const validateDay = (day) => {
+const validateDay = (day: string): string => {
   const parsedDay = parseInt(day, 10);
 
   if (isNaN(parsedDay) || parsedDay < 1 || parsedDay > 24) {
@@ -23,7 +22,7 @@ const validateDay = (day) => {
   return parsedDay.toString();
 };
 
-const validateYear = (year) => {
+const validateYear = (year: string): string => {
   const parsedYear = parseInt(year, 10);
 
   if (isNaN(parsedYear) || parsedYear > currentYear) {
@@ -40,19 +39,15 @@ if (!dayArg && (currentMonth !== 11 || currentDay > 24)) {
   console.error(
     "It is currently not Advent season. Please specify a day within Advent season (npm start <1-24>)."
   );
-
   process.exit(1);
 }
 
 const day = dayArg ? validateDay(dayArg) : currentDay.toString();
 const year = yearArg ? validateYear(yearArg) : currentYear.toString();
 
-const currentModulePath = fileURLToPath(import.meta.url);
-const currentDir = path.dirname(currentModulePath);
-
-const folderPath = path.join(currentDir, year, day);
+const folderPath = path.join("src", year, day);
 const inputPath = path.join(folderPath, "input.txt");
-const indexPath = path.join(folderPath, "index.js");
+const indexPath = path.join(folderPath, "index.ts");
 
 try {
   if (!fs.existsSync(folderPath)) {
@@ -60,15 +55,15 @@ try {
 
     const indexBoilerplate = `import { readInputFile } from "../../utils.js";
 
-const input = readInputFile(import.meta.url);
+const input = readInputFile(${year}, ${day});
 `;
 
     fs.writeFileSync(inputPath, "");
     fs.writeFileSync(indexPath, indexBoilerplate);
     console.log(`Created boilerplate for day ${day} of ${year}`);
   } else {
-    console.log(`Running day ${day} of ${year}`);
-    execSync(`node src/${year}/${day}`, { stdio: "inherit" });
+    console.log(`Running day ${day} of ${year} \n`);
+    execSync(`node dist/${year}/${day}`, { stdio: "inherit" });
   }
 } catch (error) {
   console.error("Error creating or running folder:", error);

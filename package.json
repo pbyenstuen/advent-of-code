@@ -3,11 +3,15 @@
   "version": "1.0.0",
   "description": "",
   "type": "module",
-  "main": "src/index.js",
   "scripts": {
-    "start": "node src"
+    "start": "tsc && node dist/index.js",
+    "build": "tsc"
   },
   "keywords": [],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "@types/node": "^22.10.1",
+    "typescript": "^5.7.2"
+  }
 }

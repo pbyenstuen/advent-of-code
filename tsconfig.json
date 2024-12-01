@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "target": "ES2020", // Output JavaScript version
+    "module": "ESNext", // Use ES Modules
+    "moduleResolution": "node", // Resolves modules as Node.js would
+    "esModuleInterop": true, // Enable compatibility between ES and CommonJS modules
+    "skipLibCheck": true, // Skip checking declaration files (faster)
+    "strict": true, // Enable strict type-checking options
+    "forceConsistentCasingInFileNames": true, // Ensure file names are case-consistent
+    "outDir": "./dist", // Directory for compiled JavaScript
+    "rootDir": "./src", // Root directory of TypeScript files
+    "baseUrl": "./", // Base directory for module resolution
+    "resolveJsonModule": true, // Allow importing .json files
+    "allowJs": true, // Allow JavaScript files in the project
+    "types": ["node"], // Add Node.js types
+    "moduleDetection": "force" // Force using ES modules for `.js` files
+  },
+  "include": ["src/**/*.ts", "src/2023/**/*.js"]
+}
